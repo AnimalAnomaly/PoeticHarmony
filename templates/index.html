@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Poetry to Music - Transform Words into Melodies{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title mb-0">
+                    <i class="fas fa-feather-alt me-2"></i>Transform Your Poetry
+                </h2>
+            </div>
+            <div class="card-body">
+                <form id="poemForm">
+                    <div class="mb-3">
+                        <label for="poemTitle" class="form-label">Poem Title</label>
+                        <input type="text" class="form-control" id="poemTitle" placeholder="Enter a title for your poem" maxlength="200">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="poemText" class="form-label">Poem Text</label>
+                        <textarea class="form-control" id="poemText" rows="10" placeholder="Enter your poem here..." required></textarea>
+                        <div class="form-text">Enter your poem line by line. The application will analyze the structure, rhythm, and sentiment to create a musical composition.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Select Instruments</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="piano" id="inst_piano" checked>
+                                    <label class="form-check-label" for="inst_piano">
+                                        <i class="fas fa-piano me-1"></i>Piano
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="acoustic_guitar" id="inst_acoustic_guitar">
+                                    <label class="form-check-label" for="inst_acoustic_guitar">
+                                        <i class="fas fa-guitar me-1"></i>Acoustic Guitar
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="strings" id="inst_strings">
+                                    <label class="form-check-label" for="inst_strings">
+                                        <i class="fas fa-music me-1"></i>Strings
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="violin" id="inst_violin">
+                                    <label class="form-check-label" for="inst_violin">
+                                        <i class="fas fa-music me-1"></i>Violin
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="cello" id="inst_cello">
+                                    <label class="form-check-label" for="inst_cello">
+                                        <i class="fas fa-music me-1"></i>Cello
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="flute" id="inst_flute">
+                                    <label class="form-check-label" for="inst_flute">
+                                        <i class="fas fa-music me-1"></i>Flute
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="clarinet" id="inst_clarinet">
+                                    <label class="form-check-label" for="inst_clarinet">
+                                        <i class="fas fa-music me-1"></i>Clarinet
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="drums" id="inst_drums">
+                                    <label class="form-check-label" for="inst_drums">
+                                        <i class="fas fa-drum me-1"></i>Drums
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-magic me-2"></i>Generate Music
+                    </button>
+                </form>
+                
+                <!-- Loading spinner -->
+                <div id="loadingSpinner" class="text-center mt-4" style="display: none;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Analyzing your poem and generating music...</p>
+                </div>
+                
+                <!-- Results -->
+                <div id="results" class="mt-4" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">
+                                <i class="fas fa-check-circle text-success me-2"></i>Your Musical Composition
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="analysisResults"></div>
+                            <div class="mt-3">
+                                <button id="downloadBtn" class="btn btn-success me-2">
+                                    <i class="fas fa-download me-1"></i>Download MIDI
+                                </button>
+                                <button id="playBtn" class="btn btn-info">
+                                    <i class="fas fa-play me-1"></i>Play Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Error display -->
+                <div id="errorDisplay" class="alert alert-danger mt-4" style="display: none;">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="errorMessage"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>How It Works
+                </h3>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li><strong>Enter Your Poetry:</strong> Type or paste your poem in the text area.</li>
+                    <li><strong>Select Instruments:</strong> Choose which instruments should play your composition.</li>
+                    <li><strong>Analysis:</strong> Our AI analyzes your poem's structure, rhythm, sentiment, and literary devices.</li>
+                    <li><strong>Musical Translation:</strong> The analysis is converted into musical elements like melody, harmony, and rhythm.</li>
+                    <li><strong>Download & Play:</strong> Get your MIDI file and listen to your poetry as music!</li>
+                </ol>
+                
+                <h4 class="mt-4">Musical Mappings</h4>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-heart text-danger me-2"></i><strong>Positive mood</strong> → Major keys, upbeat tempo</li>
+                    <li><i class="fas fa-cloud-rain text-primary me-2"></i><strong>Negative mood</strong> → Minor keys, slower tempo</li>
+                    <li><i class="fas fa-ruler me-2"></i><strong>Syllable count</strong> → Musical phrase length</li>
+                    <li><i class="fas fa-drum me-2"></i><strong>Poetic meter</strong> → Rhythm patterns</li>
+                    <li><i class="fas fa-palette me-2"></i><strong>Literary devices</strong> → Musical ornaments</li>
+                </ul>
+            </div>
+        </div>
+        
+        {% if recent_compositions %}
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-history me-2"></i>Recent Compositions
+                </h3>
+            </div>
+            <div class="card-body">
+                {% for composition in recent_compositions %}
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <strong>{{ composition.title }}</strong>
+                        <small class="text-muted d-block">{{ composition.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                    </div>
+                    <a href="{{ url_for('download_midi', composition_id=composition.id) }}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-download"></i>
+                    </a>
+                </div>
+                {% if not loop.last %}<hr>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// MIDI playback functionality would go here
+// For now, we'll implement basic form handling
+</script>
+{% endblock %}

@@ -1,0 +1,184 @@
+/* Custom styles for Poetry to Music app */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Custom card styling */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Poem text area styling */
+#poemText {
+    font-family: 'Georgia', serif;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+/* Loading spinner styling */
+#loadingSpinner {
+    padding: 2rem;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Results section styling */
+#results .card {
+    border-left: 4px solid var(--bs-success);
+}
+
+/* Analysis results styling */
+.analysis-item {
+    background: var(--bs-gray-100);
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+/* Instrument selection styling */
+.form-check {
+    margin-bottom: 0.5rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* Button styling */
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* Music-themed icons */
+.fa-music, .fa-piano, .fa-guitar, .fa-drum, .fa-feather-alt {
+    color: var(--bs-info);
+}
+
+/* Error display styling */
+#errorDisplay {
+    border-left: 4px solid var(--bs-danger);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .btn-lg {
+        width: 100%;
+    }
+}
+
+/* Dark theme adjustments */
+[data-bs-theme="dark"] .analysis-item {
+    background: var(--bs-gray-800);
+}
+
+[data-bs-theme="dark"] .form-control {
+    background-color: var(--bs-gray-800);
+    border-color: var(--bs-gray-700);
+    color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+    background-color: var(--bs-gray-800);
+    border-color: var(--bs-primary);
+    color: var(--bs-light);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+}
+
+/* Navbar brand styling */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* Progress indicator */
+.progress-step {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--bs-secondary);
+    margin: 0 4px;
+}
+
+.progress-step.active {
+    background-color: var(--bs-primary);
+}
+
+/* Composition preview styling */
+.composition-preview {
+    background: var(--bs-gray-100);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+[data-bs-theme="dark"] .composition-preview {
+    background: var(--bs-gray-800);
+}
+
+/* Musical notation styling */
+.musical-note {
+    font-size: 1.2rem;
+    color: var(--bs-info);
+    margin: 0 2px;
+}
+
+/* Tempo and key display */
+.musical-info {
+    display: inline-block;
+    background: var(--bs-info);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    margin: 0.25rem;
+}
+
+/* Animation for loading */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Success state */
+.success-state {
+    border-left: 4px solid var(--bs-success);
+    background: rgba(var(--bs-success-rgb), 0.1);
+}
+
+/* Error state */
+.error-state {
+    border-left: 4px solid var(--bs-danger);
+    background: rgba(var(--bs-danger-rgb), 0.1);
+}
