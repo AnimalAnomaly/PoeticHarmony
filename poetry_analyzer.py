@@ -113,22 +113,31 @@ class PoetryAnalyzer:
     
     def _analyze_sentiment(self, text):
         """Analyze sentiment using TextBlob"""
-        blob = TextBlob(text)
-        polarity = blob.sentiment.polarity
-        subjectivity = blob.sentiment.subjectivity
-        
-        if polarity > 0.1:
-            mood = "positive"
-        elif polarity < -0.1:
-            mood = "negative"
-        else:
-            mood = "neutral"
-        
-        return {
-            "polarity": polarity,
-            "subjectivity": subjectivity,
-            "mood": mood
-        }
+        try:
+            blob = TextBlob(text)
+            sentiment = blob.sentiment
+            polarity = float(sentiment.polarity)
+            subjectivity = float(sentiment.subjectivity)
+            
+            if polarity > 0.1:
+                mood = "positive"
+            elif polarity < -0.1:
+                mood = "negative"
+            else:
+                mood = "neutral"
+            
+            return {
+                "polarity": polarity,
+                "subjectivity": subjectivity,
+                "mood": mood
+            }
+        except Exception as e:
+            logging.warning(f"Sentiment analysis failed: {e}")
+            return {
+                "polarity": 0.0,
+                "subjectivity": 0.5,
+                "mood": "neutral"
+            }
     
     def _detect_meter(self, text):
         """Basic meter detection based on syllable patterns"""
@@ -197,11 +206,33 @@ class PoetryAnalyzer:
         return word1[-2:] == word2[-2:] or word1[-3:] == word2[-3:]
     
     def _detect_literary_devices(self, text):
-        """Detect basic literary devices"""
+        """Detect basic literary devices with explanations"""
         devices = {
-            "alliteration": self._detect_alliteration(text),
-            "repetition": self._detect_repetition(text),
-            "metaphor_simile": self._detect_metaphor_simile(text)
+            "alliteration": {
+                "detected": self._detect_alliteration(text),
+                "explanation": "Alliteration is the repetition of consonant sounds at the beginning of words. In music, this creates rhythmic emphasis through repeated notes or accents.",
+                "musical_impact": "Creates syncopated rhythms and emphasizes certain beats"
+            },
+            "repetition": {
+                "detected": self._detect_repetition(text),
+                "explanation": "Repetition involves repeating words or phrases for emphasis. Musically, this translates to recurring motifs and themes.",
+                "musical_impact": "Generates melodic themes that repeat throughout the composition"
+            },
+            "metaphor_simile": {
+                "detected": self._detect_metaphor_simile(text),
+                "explanation": "Metaphors and similes create vivid imagery by comparing different things. This adds harmonic complexity and tonal color to the music.",
+                "musical_impact": "Introduces chord variations and modulations to different keys"
+            },
+            "imagery": {
+                "detected": self._detect_imagery(text),
+                "explanation": "Vivid imagery appeals to the senses and creates atmosphere. This influences instrumentation choices and dynamic expression.",
+                "musical_impact": "Determines instrument selection and volume changes throughout the piece"
+            },
+            "assonance": {
+                "detected": self._detect_assonance(text),
+                "explanation": "Assonance is the repetition of vowel sounds within words. This creates melodic flow and smooth transitions.",
+                "musical_impact": "Produces legato passages and flowing melodic lines"
+            }
         }
         return devices
     
@@ -233,6 +264,37 @@ class PoetryAnalyzer:
         has_metaphor = any(indicator in text_lower for indicator in metaphor_indicators)
         
         return has_simile or has_metaphor
+    
+    def _detect_imagery(self, text):
+        """Detect vivid imagery and sensory language"""
+        text_lower = text.lower()
+        sensory_words = [
+            # Visual
+            'bright', 'dark', 'colorful', 'shining', 'gleaming', 'shadowy', 'vivid', 'pale', 'golden', 'silver',
+            # Auditory
+            'whisper', 'roar', 'silence', 'echo', 'musical', 'harmony', 'thunder', 'gentle', 'loud', 'quiet',
+            # Tactile
+            'rough', 'smooth', 'soft', 'hard', 'warm', 'cold', 'gentle', 'sharp', 'tender', 'harsh',
+            # Emotional/Atmospheric
+            'peaceful', 'stormy', 'serene', 'turbulent', 'mysterious', 'ethereal', 'haunting', 'joyful'
+        ]
+        
+        imagery_count = sum(1 for word in sensory_words if word in text_lower)
+        return imagery_count >= 2  # At least 2 sensory words
+    
+    def _detect_assonance(self, text):
+        """Detect assonance (repetition of vowel sounds)"""
+        words = re.findall(r'\b\w+\b', text.lower())
+        vowel_patterns = {}
+        
+        for word in words:
+            if len(word) > 2:
+                vowels = ''.join([char for char in word if char in 'aeiou'])
+                if len(vowels) >= 2:
+                    vowel_patterns[vowels] = vowel_patterns.get(vowels, 0) + 1
+        
+        # Check if any vowel pattern appears multiple times
+        return any(count >= 2 for count in vowel_patterns.values())
     
     def _generate_musical_suggestions(self, analysis):
         """Generate musical parameters based on analysis"""

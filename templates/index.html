@@ -142,14 +142,61 @@
                     <li><strong>Download & Play:</strong> Get your MIDI file and listen to your poetry as music!</li>
                 </ol>
                 
-                <h4 class="mt-4">Musical Mappings</h4>
-                <ul class="list-unstyled">
-                    <li><i class="fas fa-heart text-danger me-2"></i><strong>Positive mood</strong> → Major keys, upbeat tempo</li>
-                    <li><i class="fas fa-cloud-rain text-primary me-2"></i><strong>Negative mood</strong> → Minor keys, slower tempo</li>
-                    <li><i class="fas fa-ruler me-2"></i><strong>Syllable count</strong> → Musical phrase length</li>
-                    <li><i class="fas fa-drum me-2"></i><strong>Poetic meter</strong> → Rhythm patterns</li>
-                    <li><i class="fas fa-palette me-2"></i><strong>Literary devices</strong> → Musical ornaments</li>
-                </ul>
+                <h4 class="mt-4">Poetry ↔ Music Theory</h4>
+                <div class="accordion" id="musicTheoryAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMapping">
+                                <i class="fas fa-magic me-2"></i>How Poetry Becomes Music
+                            </button>
+                        </h2>
+                        <div id="collapseMapping" class="accordion-collapse collapse" data-bs-parent="#musicTheoryAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="fas fa-heart text-danger me-2"></i><strong>Positive mood</strong> → Major keys (C, G, F) create bright, uplifting sounds</li>
+                                    <li class="mb-2"><i class="fas fa-cloud-rain text-primary me-2"></i><strong>Negative mood</strong> → Minor keys (Am, Em, Dm) produce contemplative, melancholic tones</li>
+                                    <li class="mb-2"><i class="fas fa-ruler me-2"></i><strong>Syllable count</strong> → Determines how many musical notes per phrase</li>
+                                    <li class="mb-2"><i class="fas fa-drum me-2"></i><strong>Iambic meter</strong> → Creates steady 4/4 rhythm (da-DUM da-DUM)</li>
+                                    <li class="mb-2"><i class="fas fa-drum me-2"></i><strong>Trochaic meter</strong> → Produces falling rhythm patterns (DUM-da DUM-da)</li>
+                                    <li class="mb-2"><i class="fas fa-exchange-alt me-2"></i><strong>ABAB rhyme</strong> → Alternating chord progressions</li>
+                                    <li class="mb-2"><i class="fas fa-link me-2"></i><strong>AABB rhyme</strong> → Paired harmonic patterns</li>
+                                    <li class="mb-2"><i class="fas fa-palette me-2"></i><strong>Alliteration</strong> → Rhythmic emphasis and syncopation</li>
+                                    <li class="mb-2"><i class="fas fa-repeat me-2"></i><strong>Repetition</strong> → Recurring melodic themes</li>
+                                    <li><i class="fas fa-image me-2"></i><strong>Imagery</strong> → Influences instrument choice and dynamics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTheory">
+                                <i class="fas fa-graduation-cap me-2"></i>Music Theory Basics
+                            </button>
+                        </h2>
+                        <div id="collapseTheory" class="accordion-collapse collapse" data-bs-parent="#musicTheoryAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Keys & Scales</h6>
+                                        <ul class="small">
+                                            <li><strong>Major keys</strong> sound happy, bright</li>
+                                            <li><strong>Minor keys</strong> sound sad, contemplative</li>
+                                            <li><strong>Scale</strong> = set of notes that work together</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Rhythm & Tempo</h6>
+                                        <ul class="small">
+                                            <li><strong>Tempo</strong> = speed (60-180 BPM)</li>
+                                            <li><strong>4/4 time</strong> = 4 beats per measure</li>
+                                            <li><strong>Meter</strong> = rhythmic pattern</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         

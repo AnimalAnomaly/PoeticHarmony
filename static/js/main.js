@@ -178,15 +178,19 @@ class PoetryToMusic {
                     <h5><i class="fas fa-chart-line me-2"></i>Poem Analysis</h5>
                     <div class="analysis-item">
                         <strong>Lines:</strong> ${analysis.line_count || 0}
+                        <small class="text-muted d-block">Each line becomes a musical phrase</small>
                     </div>
                     <div class="analysis-item">
                         <strong>Total Syllables:</strong> ${analysis.total_syllables || 0}
+                        <small class="text-muted d-block">Determines overall composition length</small>
                     </div>
                     <div class="analysis-item">
                         <strong>Meter:</strong> ${this.formatMeter(analysis.meter)}
+                        <small class="text-muted d-block">${this.getMeterExplanation(analysis.meter)}</small>
                     </div>
                     <div class="analysis-item">
                         <strong>Rhyme Scheme:</strong> ${analysis.rhyme_scheme || 'Free'}
+                        <small class="text-muted d-block">${this.getRhymeExplanation(analysis.rhyme_scheme)}</small>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -196,38 +200,68 @@ class PoetryToMusic {
                         <span class="text-${moodColor}">
                             <i class="${moodIcon} me-1"></i>${mood.charAt(0).toUpperCase() + mood.slice(1)}
                         </span>
+                        <small class="text-muted d-block">${this.getMoodMusicalExplanation(mood)}</small>
                     </div>
                     <div class="analysis-item">
                         <strong>Key:</strong> <span class="musical-info">${analysis.key_suggestion || 'C'}</span>
+                        <small class="text-muted d-block">${this.getKeyExplanation(analysis.key_suggestion)}</small>
                     </div>
                     <div class="analysis-item">
                         <strong>Tempo:</strong> <span class="musical-info">${analysis.tempo_suggestion || 120} BPM</span>
+                        <small class="text-muted d-block">${this.getTempoExplanation(analysis.tempo_suggestion)}</small>
                     </div>
                     <div class="analysis-item">
                         <strong>Time Signature:</strong> <span class="musical-info">${analysis.time_signature || '4/4'}</span>
+                        <small class="text-muted d-block">Sets the rhythmic foundation</small>
                     </div>
                 </div>
             </div>
             
             ${this.generateLiteraryDevicesHtml(analysis.literary_devices)}
+            
+            ${this.generateDetailedAnalysisHtml(analysis)}
         `;
     }
 
     generateLiteraryDevicesHtml(devices) {
         if (!devices) return '';
 
-        const devicesList = [];
-        if (devices.alliteration) devicesList.push('Alliteration');
-        if (devices.repetition) devicesList.push('Repetition');
-        if (devices.metaphor_simile) devicesList.push('Metaphor/Simile');
+        const detectedDevices = [];
+        Object.keys(devices).forEach(deviceKey => {
+            const device = devices[deviceKey];
+            if (device && device.detected) {
+                detectedDevices.push({
+                    name: this.formatDeviceName(deviceKey),
+                    explanation: device.explanation,
+                    musical_impact: device.musical_impact
+                });
+            }
+        });
 
-        if (devicesList.length === 0) return '';
+        if (detectedDevices.length === 0) return '';
 
         return `
-            <div class="mt-3">
-                <h6><i class="fas fa-palette me-2"></i>Literary Devices Detected</h6>
-                <div class="analysis-item">
-                    ${devicesList.map(device => `<span class="badge bg-secondary me-1">${device}</span>`).join('')}
+            <div class="mt-4">
+                <h5><i class="fas fa-palette me-2"></i>Literary Devices & Musical Impact</h5>
+                <div class="accordion" id="literaryDevicesAccordion">
+                    ${detectedDevices.map((device, index) => `
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading${index}">
+                                <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" 
+                                        data-bs-toggle="collapse" data-bs-target="#collapse${index}">
+                                    <span class="badge bg-info me-2">${device.name}</span>
+                                    Literary Device Detected
+                                </button>
+                            </h2>
+                            <div id="collapse${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" 
+                                 data-bs-parent="#literaryDevicesAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>What it is:</strong> ${device.explanation}</p>
+                                    <p class="text-info mb-0"><strong>Musical Translation:</strong> ${device.musical_impact}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
                 </div>
             </div>
         `;
@@ -256,6 +290,117 @@ class PoetryToMusic {
         return meter.replace('_', ' ').split(' ').map(word => 
             word.charAt(0).toUpperCase() + word.slice(1)
         ).join(' ');
+    }
+
+    formatDeviceName(deviceKey) {
+        const names = {
+            'alliteration': 'Alliteration',
+            'repetition': 'Repetition',
+            'metaphor_simile': 'Metaphor/Simile',
+            'imagery': 'Imagery',
+            'assonance': 'Assonance'
+        };
+        return names[deviceKey] || deviceKey;
+    }
+
+    getMeterExplanation(meter) {
+        const explanations = {
+            'iambic': 'Creates steady, marching rhythm (da-DUM da-DUM)',
+            'trochaic': 'Creates falling rhythm (DUM-da DUM-da)',
+            'free_verse': 'Allows flexible, experimental rhythms',
+            'regular': 'Produces consistent, structured musical phrases'
+        };
+        return explanations[meter] || 'Influences rhythmic patterns';
+    }
+
+    getRhymeExplanation(rhyme) {
+        const explanations = {
+            'ABAB': 'Creates alternating harmonic patterns',
+            'AABB': 'Produces paired harmonic progressions',
+            'free': 'Allows varied harmonic exploration',
+            'none': 'Focuses on melodic rather than harmonic structure'
+        };
+        return explanations[rhyme] || 'Affects harmonic structure';
+    }
+
+    getMoodMusicalExplanation(mood) {
+        const explanations = {
+            'positive': 'Translated to major keys and brighter tempos',
+            'negative': 'Expressed through minor keys and slower tempos',
+            'neutral': 'Balanced approach with moderate musical elements'
+        };
+        return explanations[mood] || 'Influences overall musical character';
+    }
+
+    getKeyExplanation(key) {
+        const explanations = {
+            'C': 'Major key - bright, optimistic sound',
+            'Am': 'Minor key - contemplative, melancholic sound',
+            'G': 'Major key - warm, uplifting character',
+            'Em': 'Minor key - gentle, introspective mood',
+            'F': 'Major key - peaceful, stable feeling',
+            'Dm': 'Minor key - serious, dramatic tone'
+        };
+        return explanations[key] || 'Sets the emotional foundation';
+    }
+
+    getTempoExplanation(tempo) {
+        if (tempo >= 140) return 'Fast tempo - energetic, exciting feel';
+        if (tempo >= 120) return 'Moderate tempo - comfortable, steady pace';
+        if (tempo >= 100) return 'Relaxed tempo - calm, thoughtful mood';
+        return 'Slow tempo - contemplative, meditative feel';
+    }
+
+    generateDetailedAnalysisHtml(analysis) {
+        const syllableCounts = analysis.syllable_counts || [];
+        const avgSyllables = syllableCounts.length > 0 ? 
+            (syllableCounts.reduce((a, b) => a + b, 0) / syllableCounts.length).toFixed(1) : 0;
+
+        return `
+            <div class="mt-4">
+                <h5><i class="fas fa-microscope me-2"></i>Detailed Analysis</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Syllable Distribution</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Average syllables per line:</strong> ${avgSyllables}</p>
+                                <p><strong>Line lengths:</strong> ${syllableCounts.join(', ')}</p>
+                                <small class="text-muted">Each syllable becomes a musical note, creating phrases of varying lengths</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Sentiment Analysis</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Emotional polarity:</strong> ${this.formatPolarity(analysis.sentiment?.polarity)}</p>
+                                <p><strong>Subjectivity:</strong> ${this.formatSubjectivity(analysis.sentiment?.subjectivity)}</p>
+                                <small class="text-muted">These values determine musical key choices and dynamic expression</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    formatPolarity(polarity) {
+        if (polarity === undefined) return 'Neutral';
+        if (polarity > 0.3) return `Positive (${polarity.toFixed(2)})`;
+        if (polarity < -0.3) return `Negative (${polarity.toFixed(2)})`;
+        return `Neutral (${polarity.toFixed(2)})`;
+    }
+
+    formatSubjectivity(subjectivity) {
+        if (subjectivity === undefined) return 'Balanced';
+        if (subjectivity > 0.7) return `Highly subjective (${subjectivity.toFixed(2)})`;
+        if (subjectivity < 0.3) return `Objective (${subjectivity.toFixed(2)})`;
+        return `Moderately subjective (${subjectivity.toFixed(2)})`;
     }
 
     hideResults() {
