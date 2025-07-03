@@ -43,4 +43,3 @@ args = "uv add nltk textblob spacy midiutil"
 
 [[ports]]
 localPort = 5000
-externalPort = 80
