@@ -1,59 +1,187 @@
 /* Custom styles for Poetry to Music app */
 
+:root {
+    --primary-gradient: linear-gradient(135deg, var(--bs-primary) 0%, #2c7be5 100%);
+    --card-border-radius: 16px;
+    --transition-speed: 0.3s;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bs-dark);
+    background-image: radial-gradient(circle at top right, rgba(44, 123, 229, 0.1) 0%, transparent 60%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Custom card styling */
 .card {
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: var(--card-border-radius);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
 }
 
 /* Poem text area styling */
 #poemText {
     font-family: 'Georgia', serif;
-    line-height: 1.6;
+    line-height: 1.8;
     resize: vertical;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed);
+}
+
+#poemText:focus {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 4px rgba(44, 123, 229, 0.15);
 }
 
 /* Loading spinner styling */
 #loadingSpinner {
-    padding: 2rem;
+    padding: 3rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--card-border-radius);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .spinner-border {
     width: 3rem;
     height: 3rem;
+    color: var(--bs-primary);
+}
+
+#loadingSpinner p {
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
 }
 
 /* Results section styling */
 #results .card {
-    border-left: 4px solid var(--bs-success);
+    border: none;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#results .card-header {
+    background: var(--primary-gradient);
+    border-radius: var(--card-border-radius) var(--card-border-radius) 0 0;
+    border-bottom: none;
+    color: white;
 }
 
 /* Analysis results styling */
 .analysis-item {
-    background: var(--bs-gray-100);
-    padding: 0.75rem;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed);
 }
 
-/* Instrument selection styling */
-.form-check {
+.analysis-item:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-item strong {
+    color: var(--bs-primary);
+    display: block;
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.analysis-item small {
+    opacity: 0.7;
+    font-size: 0.85rem;
+}
+
+/* Form check styling */
+.form-check {
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color var(--transition-speed);
+}
+
+.form-check:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.form-check-input {
+    border-width: 2px;
+    transition: all var(--transition-speed);
 }
 
 .form-check-input:checked {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
+    box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.2);
+}
+
+.form-check-label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* Button styling */
+.btn {
+    border-radius: 12px;
+    transition: all var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+}
+
 .btn-lg {
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 2rem;
     font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    box-shadow: 0 4px 12px rgba(44, 123, 229, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(44, 123, 229, 0.3);
+}
+
+.btn-success, .btn-info {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success:hover, .btn-info:hover {
+    transform: translateY(-2px);
 }
 
 /* Music-themed icons */
@@ -63,7 +191,17 @@ body {
 
 /* Error display styling */
 #errorDisplay {
-    border-left: 4px solid var(--bs-danger);
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    border-radius: var(--card-border-radius);
+    padding: 1rem;
+    color: var(--bs-danger);
+    backdrop-filter: blur(10px);
+}
+
+#errorDisplay i {
+    color: var(--bs-danger);
+    margin-right: 0.5rem;
 }
 
 /* Responsive adjustments */
@@ -102,12 +240,73 @@ body {
 /* Footer styling */
 footer {
     margin-top: auto;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Navbar brand styling */
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    transition: all var(--transition-speed);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.social-links a:hover {
+    background: var(--primary-gradient);
+    transform: translateY(-2px);
+}
+
+/* Navbar and brand styling */
+.navbar {
+    padding: 1rem 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .navbar-brand {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.3rem;
+    padding: 0.5rem 0;
+}
+
+.brand-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--primary-gradient);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    box-shadow: 0 4px 12px rgba(44, 123, 229, 0.2);
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    border-radius: 8px;
+    transition: all var(--transition-speed);
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler {
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Progress indicator */
@@ -136,49 +335,242 @@ footer {
     background: var(--bs-gray-800);
 }
 
-/* Musical notation styling */
+/* Musical notation and theory styling */
 .musical-note {
     font-size: 1.2rem;
     color: var(--bs-info);
     margin: 0 2px;
+    transition: transform var(--transition-speed);
 }
 
-/* Tempo and key display */
+.musical-note:hover {
+    transform: scale(1.2);
+}
+
 .musical-info {
-    display: inline-block;
-    background: var(--bs-info);
+    display: inline-flex;
+    align-items: center;
+    background: var(--primary-gradient);
     color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
     font-size: 0.875rem;
-    margin: 0.25rem;
+    margin: 0.5rem;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(44, 123, 229, 0.2);
+    transition: all var(--transition-speed);
 }
 
-/* Animation for loading */
+.musical-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(44, 123, 229, 0.3);
+}
+
+.musical-info i {
+    margin-right: 0.5rem;
+}
+
+/* Accordion styling */
+.accordion {
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-color: rgba(255, 255, 255, 0.1);
+    --bs-accordion-btn-bg: transparent;
+    --bs-accordion-btn-focus-border-color: var(--bs-primary);
+    --bs-accordion-active-bg: rgba(255, 255, 255, 0.05);
+    --bs-accordion-active-color: var(--bs-primary);
+}
+
+.accordion-item {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+.accordion-button {
+    font-weight: 600;
+    padding: 1.25rem;
+    transition: all var(--transition-speed);
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: none;
+}
+
+.accordion-button::after {
+    background-size: 1.25rem;
+    transition: all var(--transition-speed);
+}
+
+.accordion-body {
+    padding: 1.25rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Theory list styling */
+.theory-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.theory-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-speed);
+}
+
+.theory-list li:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(4px);
+}
+
+.theory-list li i {
+    width: 24px;
+    margin-right: 0.75rem;
+    color: var(--bs-primary);
+}
+
+/* Animations */
 @keyframes pulse {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .pulse {
     animation: pulse 2s infinite;
 }
 
-/* Success state */
-.success-state {
-    border-left: 4px solid var(--bs-success);
-    background: rgba(var(--bs-success-rgb), 0.1);
+.slide-in {
+    animation: slideIn 0.5s ease-out forwards;
 }
 
-/* Error state */
+.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Add animations to elements */
+#results {
+    animation: slideIn 0.5s ease-out;
+}
+
+.analysis-item {
+    opacity: 0;
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.analysis-item:nth-child(1) { animation-delay: 0.1s; }
+.analysis-item:nth-child(2) { animation-delay: 0.2s; }
+.analysis-item:nth-child(3) { animation-delay: 0.3s; }
+.analysis-item:nth-child(4) { animation-delay: 0.4s; }
+
+.theory-list li {
+    opacity: 0;
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.theory-list li:nth-child(1) { animation-delay: 0.1s; }
+.theory-list li:nth-child(2) { animation-delay: 0.15s; }
+.theory-list li:nth-child(3) { animation-delay: 0.2s; }
+.theory-list li:nth-child(4) { animation-delay: 0.25s; }
+.theory-list li:nth-child(5) { animation-delay: 0.3s; }
+.theory-list li:nth-child(6) { animation-delay: 0.35s; }
+.theory-list li:nth-child(7) { animation-delay: 0.4s; }
+.theory-list li:nth-child(8) { animation-delay: 0.45s; }
+.theory-list li:nth-child(9) { animation-delay: 0.5s; }
+.theory-list li:nth-child(10) { animation-delay: 0.55s; }
+
+#errorDisplay {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Success and Error states */
+.success-state, .error-state {
+    border: none;
+    border-radius: var(--card-border-radius);
+    padding: 1.25rem;
+    margin: 1rem 0;
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-speed);
+    animation: slideIn 0.3s ease-out;
+}
+
+.success-state {
+    background: linear-gradient(135deg, rgba(25, 135, 84, 0.1) 0%, rgba(25, 135, 84, 0.2) 100%);
+    border: 1px solid rgba(25, 135, 84, 0.2);
+}
+
 .error-state {
-    border-left: 4px solid var(--bs-danger);
-    background: rgba(var(--bs-danger-rgb), 0.1);
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.2) 100%);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.success-state:hover, .error-state:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Form input enhancements */
+.form-control {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    color: var(--bs-light);
+    transition: all var(--transition-speed);
+}
+
+.form-control:focus {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 4px rgba(44, 123, 229, 0.15);
+    color: var(--bs-light);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Card hover effects */
+.card:hover .card-header {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-control, .btn {
+        font-size: 16px; /* Prevent zoom on mobile */
+    }
+    
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .brand-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
 }
